@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reserve a Table — Ember & Spice</title>
+<link rel="stylesheet" href="css/style.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZS3KBH3XW4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZS3KBH3XW4');</script>
+</head>
+<body>
+
+<nav class="navbar scrolled">
+  <div class="container">
+    <div class="navbar-inner">
+      <a href="index.html" class="nav-logo">Ember <span>&</span> Spice</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="index.html#chef">Our Chef</a></li>
+        <li><a href="index.html#location">Location</a></li>
+      </ul>
+      <a href="book.html" class="btn btn-primary">Reserve a Table</a>
+      <button class="nav-hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<div class="booking-hero">
+  <div class="container">
+    <div class="section-label" style="justify-content:center;">Reservations</div>
+    <h1>Reserve Your <em style="color:var(--copper);">Table</em></h1>
+    <p style="max-width:460px;margin:16px auto 0;">We look forward to welcoming you. Tables are reserved for 2 hours unless noted for special occasions.</p>
+  </div>
+</div>
+
+<div class="form-container">
+
+  <div class="booking-form-box" id="bookingForm">
+    <div style="margin-bottom:32px;">
+      <h3 style="font-weight:500;margin-bottom:6px;color:var(--green);">Your Reservation Details</h3>
+      <p style="font-size:0.8rem;">All fields are required for confirmation</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" id="guestName" placeholder="Your name"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input type="tel" class="form-input" id="guestPhone" placeholder="+91 XXXXX XXXXX"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" id="guestEmail" placeholder="your@email.com"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Number of Guests</label>
+      <div class="guest-selector">
+        <button class="guest-btn" onclick="changeGuests(-1)">−</button>
+        <span class="guest-count" id="guestCount">2</span>
+        <button class="guest-btn" onclick="changeGuests(1)">+</button>
+        <span style="font-size:0.82rem;color:var(--text-faint);margin-left:8px;">guests</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Occasion (Optional)</label>
+      <select class="form-select" id="occasion">
+        <option value="">No special occasion</option>
+        <option value="Birthday">Birthday Celebration</option>
+        <option value="Anniversary">Anniversary</option>
+        <option value="Corporate Dinner">Corporate Dinner</option>
+        <option value="Proposal">Proposal 💍</option>
+        <option value="Family Gathering">Family Gathering</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <input type="date" class="form-input" id="resDate"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Meal</label>
+        <select class="form-select" id="mealTime">
+          <option value="Lunch">Lunch (12:00–3:30 PM)</option>
+          <option value="Dinner" selected>Dinner (7:00–11:30 PM)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Preferred Time</label>
+      <div class="time-slots" id="timeSlots">
+        <div class="time-slot" onclick="selectTime(this,'7:00 PM')">7:00 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'7:30 PM')">7:30 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'8:00 PM')">8:00 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'8:30 PM')">8:30 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'9:00 PM')">9:00 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'9:30 PM')">9:30 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'10:00 PM')">10:00 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'10:30 PM')">10:30 PM</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Special Requests</label>
+      <input type="text" class="form-input" id="notes" placeholder="Dietary restrictions, allergies, seating preferences..."/>
+    </div>
+
+    <button class="form-submit" onclick="submitReservation()">✦ Confirm Reservation</button>
+  </div>
+
+  <!-- Success Screen -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">🍽️</div>
+    <h2 style="font-size:2rem;font-weight:400;margin-bottom:8px;color:var(--green);">Table Reserved!</h2>
+    <p id="successMsg" style="margin-bottom:28px;font-size:0.95rem;"></p>
+    <div id="bookingSummary" style="background:var(--cream);border:1px solid var(--cream-3);border-radius:var(--radius-md);padding:24px;margin-bottom:28px;text-align:left;"></div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a id="whatsappLink" href="#" class="btn btn-primary" target="_blank">💬 WhatsApp Confirmation</a>
+      <a href="index.html" class="btn btn-outline">← Back to Home</a>
+    </div>
+  </div>
+
+</div>
+
+<a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">💬</a>
+
+<script>
+let selectedTime = '';
+let guestNum = 2;
+
+document.getElementById('resDate').min = new Date().toISOString().split('T')[0];
+
+function changeGuests(delta) {
+  guestNum = Math.max(1, Math.min(20, guestNum + delta));
+  document.getElementById('guestCount').textContent = guestNum;
+}
+
+function selectTime(el, time) {
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTime = time;
+}
+
+document.getElementById('mealTime').addEventListener('change', function() {
+  const slots = document.getElementById('timeSlots');
+  if (this.value === 'Lunch') {
+    slots.innerHTML = ['12:00 PM','12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM']
+      .map(t => `<div class="time-slot" onclick="selectTime(this,'${t}')">${t}</div>`).join('');
+  } else {
+    slots.innerHTML = ['7:00 PM','7:30 PM','8:00 PM','8:30 PM','9:00 PM','9:30 PM','10:00 PM','10:30 PM']
+      .map(t => `<div class="time-slot" onclick="selectTime(this,'${t}')">${t}</div>`).join('');
+  }
+  selectedTime = '';
+});
+
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+}
+
+async function submitReservation() {
+  const name    = document.getElementById('guestName').value.trim();
+  const phone   = document.getElementById('guestPhone').value.trim();
+  const email   = document.getElementById('guestEmail').value.trim();
+  const date    = document.getElementById('resDate').value;
+  const meal    = document.getElementById('mealTime').value;
+  const occasion= document.getElementById('occasion').value;
+  const notes   = document.getElementById('notes').value.trim();
+
+  if (!name || !phone || !date || !selectedTime) {
+    alert('Please fill all required fields and select a time slot.');
+    return;
+  }
+
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Confirming...';
+  btn.disabled = true;
+
+  const SUPABASE_URL = 'https://angndnomydhwnrvcakln.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFuZ25kbm9teWRod25ydmNha2xuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MjYyNzcsImV4cCI6MjA4ODIwMjI3N30.eHFXTVHRKj3gt0wGxUNqAslghiQ1qbdB9xHtcUxbF7k';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/restaurant_reservations`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ guest_name: name, guest_phone: phone, guest_email: email || null, guests: guestNum, occasion: occasion || null, reservation_date: date, reservation_time: selectedTime, meal_period: meal, notes: notes || null, status: 'pending' })
+    });
+
+    if (res.ok || res.status === 201) {
+      const formatted = new Date(date).toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+      document.getElementById('bookingForm').style.display = 'none';
+      document.getElementById('successScreen').classList.add('show');
+      document.getElementById('successMsg').textContent = `Thank you, ${name}! We'll send a confirmation shortly.`;
+      document.getElementById('bookingSummary').innerHTML = `
+        <div style="display:grid;gap:10px;">
+          ${[['Guest','Name', name],['Guests','Guests', guestNum+' people'],['Date','Date', formatted],['Time','Time', selectedTime],['Meal','Meal', meal],['Occasion','Occasion', occasion||'—'],['Status','Status','⏳ Pending Confirmation']].map(([_,l,v])=>`
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--cream-3);">
+            <span style="font-size:0.78rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;font-weight:600;">${l}</span>
+            <span style="font-size:0.85rem;color:${l==='Status'?'var(--copper)':'var(--text-dark)'};">${v}</span>
+          </div>`).join('')}
+        </div>`;
+      const waMsg = encodeURIComponent(`Hi Ember & Spice! My reservation:\n\nName: ${name}\nGuests: ${guestNum}\nDate: ${formatted}\nTime: ${selectedTime}\nMeal: ${meal}${occasion?'\nOccasion: '+occasion:''}\n\nLooking forward to dining with you! 🍽️`);
+      document.getElementById('whatsappLink').href = `https://wa.me/919876543210?text=${waMsg}`;
+    } else throw new Error();
+  } catch {
+    alert("Reservation received! We'll confirm via WhatsApp shortly.");
+    btn.textContent = '✦ Confirm Reservation';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

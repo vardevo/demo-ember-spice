@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin — Ember & Spice</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="admin-body">
+
+<!-- LOGIN -->
+<div class="admin-login" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div style="font-family:var(--font-head);font-size:1.6rem;color:var(--green);">Ember <span style="color:var(--copper);">&</span> Spice</div>
+      <h2>Restaurant Dashboard</h2>
+      <p>Staff access only</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="pwInput" placeholder="Enter password" onkeypress="if(event.key==='Enter')login()"/>
+    </div>
+    <button class="form-submit" onclick="login()">Access Dashboard</button>
+    <p id="loginError" style="color:#B43C28;font-size:0.8rem;text-align:center;margin-top:12px;display:none;">Incorrect password</p>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="admin-sidebar" id="adminSidebar">
+  <div class="sidebar-logo">
+    <div style="font-family:var(--font-head);font-size:1.2rem;color:var(--cream);">Ember <span style="color:var(--copper-3);">&</span> Spice</div>
+    <p style="font-size:0.72rem;color:rgba(253,250,244,0.35);margin-top:4px;">Restaurant Admin</p>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-nav-item active" onclick="showTab('overview',this)">◈ Overview</div>
+    <div class="sidebar-nav-item" onclick="showTab('all',this)">≡ All Reservations</div>
+    <div class="sidebar-nav-item" onclick="showTab('today',this)">◷ Tonight's Tables</div>
+  </nav>
+  <div style="padding:20px 24px;border-top:1px solid rgba(253,250,244,0.06);">
+    <button onclick="logout()" style="background:none;border:1px solid rgba(180,60,40,0.3);color:#D4856A;padding:8px 16px;border-radius:6px;cursor:pointer;width:100%;font-size:0.78rem;">Sign Out</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="admin-main" id="adminMain">
+
+  <div id="tab-overview">
+    <div class="admin-topbar">
+      <div>
+        <h1>Good <span id="greeting"></span> 👋</h1>
+        <p id="todayDate" style="color:var(--text-faint);font-size:0.82rem;margin-top:4px;"></p>
+      </div>
+      <a href="book.html" class="btn btn-primary" style="font-size:0.78rem;">+ New Reservation</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-card-label">Tonight's Covers</div><div class="stat-card-num" id="statTonight">—</div><div class="stat-card-sub">Guests tonight</div></div>
+      <div class="stat-card"><div class="stat-card-label">Pending Confirm</div><div class="stat-card-num" id="statPending">—</div><div class="stat-card-sub">Awaiting confirmation</div></div>
+      <div class="stat-card"><div class="stat-card-label">This Week</div><div class="stat-card-num" id="statWeek">—</div><div class="stat-card-sub">Weekly reservations</div></div>
+      <div class="stat-card"><div class="stat-card-label">Total Guests</div><div class="stat-card-num" id="statTotal">—</div><div class="stat-card-sub">All time</div></div>
+    </div>
+    <div class="appointments-table">
+      <div class="table-header">
+        <div><h3>Recent Reservations</h3><p>Latest bookings</p></div>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Guest</th><th>Guests</th><th>Date</th><th>Time</th><th>Occasion</th><th>Status</th><th>Actions</th></tr></thead><tbody id="recentBody"></tbody></table></div>
+    </div>
+  </div>
+
+  <div id="tab-all" style="display:none;">
+    <div class="admin-topbar">
+      <div><h1>All Reservations</h1></div>
+      <select class="form-select" id="statusFilter" onchange="filterData()" style="width:160px;padding:10px 14px;font-size:0.8rem;">
+        <option value="">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="done">Completed</option>
+      </select>
+    </div>
+    <div class="appointments-table">
+      <div class="table-wrap"><table><thead><tr><th>Guest</th><th>Phone</th><th>Guests</th><th>Date</th><th>Time</th><th>Meal</th><th>Occasion</th><th>Status</th><th>Actions</th></tr></thead><tbody id="allBody"></tbody></table></div>
+    </div>
+  </div>
+
+  <div id="tab-today" style="display:none;">
+    <div class="admin-topbar">
+      <div><h1>Tonight's Tables</h1><p style="color:var(--text-faint);font-size:0.82rem;" id="tonightLabel"></p></div>
+    </div>
+    <div class="appointments-table">
+      <div class="table-wrap"><table><thead><tr><th>Time</th><th>Guest</th><th>Covers</th><th>Occasion</th><th>Notes</th><th>Status</th><th>Actions</th></tr></thead><tbody id="todayBody"></tbody></table></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SUPABASE_URL = 'https://angndnomydhwnrvcakln.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFuZ25kbm9teWRod25ydmNha2xuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MjYyNzcsImV4cCI6MjA4ODIwMjI3N30.eHFXTVHRKj3gt0wGxUNqAslghiQ1qbdB9xHtcUxbF7k';
+const PASSWORD = 'ember2026';
+let allData = [];
+
+function login() {
+  if (document.getElementById('pwInput').value === PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminSidebar').classList.add('show');
+    document.getElementById('adminMain').classList.add('show');
+    init();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+function logout() {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminSidebar').classList.remove('show');
+  document.getElementById('adminMain').classList.remove('show');
+}
+function showTab(tab, el) {
+  ['overview','all','today'].forEach(t => document.getElementById('tab-'+t).style.display = 'none');
+  document.getElementById('tab-'+tab).style.display = 'block';
+  document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  if (tab === 'all') renderAll(allData);
+  if (tab === 'today') renderToday(allData);
+}
+function init() {
+  const now = new Date();
+  const h = now.getHours();
+  document.getElementById('greeting').textContent = h < 12 ? 'Morning' : h < 17 ? 'Afternoon' : 'Evening';
+  document.getElementById('todayDate').textContent = now.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('tonightLabel').textContent = 'Dinner service — ' + now.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long' });
+  fetchData();
+}
+async function fetchData() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/restaurant_reservations?select=*&order=reservation_date.asc,reservation_time.asc`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    allData = await res.json();
+    updateStats(); renderRecent(); renderAll(allData); renderToday(allData);
+  } catch(e) { console.error(e); }
+}
+function updateStats() {
+  const today = new Date().toISOString().split('T')[0];
+  const weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+  const todayRes = allData.filter(r => r.reservation_date === today);
+  const totalGuests = todayRes.reduce((s,r) => s + (r.guests||0), 0);
+  document.getElementById('statTonight').textContent = totalGuests || 0;
+  document.getElementById('statPending').textContent = allData.filter(r => r.status === 'pending').length;
+  document.getElementById('statWeek').textContent = allData.filter(r => new Date(r.reservation_date) >= weekStart).length;
+  document.getElementById('statTotal').textContent = allData.reduce((s,r) => s + (r.guests||0), 0);
+}
+function badge(s) {
+  const m = { pending:'status-pending', confirmed:'status-confirmed', done:'status-done' };
+  const ic = { pending:'⏳', confirmed:'✓', done:'✓✓' };
+  return `<span class="status-badge ${m[s]||''}">${ic[s]||''}${s}</span>`;
+}
+function actions(id, status) {
+  let b = '';
+  if (status === 'pending') b += `<button class="action-btn action-confirm" onclick="updateStatus('${id}','confirmed')">✓ Confirm</button>`;
+  if (status === 'confirmed') b += `<button class="action-btn action-confirm" onclick="updateStatus('${id}','done')">✓ Seated</button>`;
+  if (status !== 'done') b += `<button class="action-btn action-cancel" onclick="updateStatus('${id}','cancelled')">✕</button>`;
+  return b;
+}
+function renderRecent() {
+  const rows = allData.slice(-6).reverse();
+  document.getElementById('recentBody').innerHTML = rows.length ? rows.map(r => `
+    <tr>
+      <td><strong>${r.guest_name}</strong></td>
+      <td>${r.guests||1} pax</td>
+      <td>${new Date(r.reservation_date).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</td>
+      <td>${r.reservation_time}</td>
+      <td>${r.occasion||'—'}</td>
+      <td>${badge(r.status)}</td>
+      <td>${actions(r.id, r.status)}</td>
+    </tr>`).join('') : '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🍽️</div><p>No reservations yet</p></div></td></tr>';
+}
+function renderAll(data) {
+  document.getElementById('allBody').innerHTML = data.length ? data.map(r => `
+    <tr>
+      <td><strong>${r.guest_name}</strong></td>
+      <td>${r.guest_phone||'—'}</td>
+      <td>${r.guests||1} pax</td>
+      <td>${new Date(r.reservation_date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</td>
+      <td>${r.reservation_time}</td>
+      <td>${r.meal_period||'Dinner'}</td>
+      <td>${r.occasion||'—'}</td>
+      <td>${badge(r.status)}</td>
+      <td>${actions(r.id, r.status)}</td>
+    </tr>`).join('') : '<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">🍽️</div><p>No reservations yet</p></div></td></tr>';
+}
+function renderToday(data) {
+  const today = new Date().toISOString().split('T')[0];
+  const t = data.filter(r => r.reservation_date === today);
+  document.getElementById('todayBody').innerHTML = t.length ? t.map(r => `
+    <tr>
+      <td><strong>${r.reservation_time}</strong></td>
+      <td>${r.guest_name}</td>
+      <td>${r.guests||1} pax</td>
+      <td>${r.occasion||'—'}</td>
+      <td style="max-width:160px;font-size:0.78rem;color:var(--text-faint);">${r.notes||'—'}</td>
+      <td>${badge(r.status)}</td>
+      <td>${actions(r.id, r.status)}</td>
+    </tr>`).join('') : '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🌙</div><p>No reservations tonight</p></div></td></tr>';
+}
+function filterData() {
+  const f = document.getElementById('statusFilter').value;
+  renderAll(f ? allData.filter(r => r.status === f) : allData);
+}
+async function updateStatus(id, status) {
+  await fetch(`${SUPABASE_URL}/rest/v1/restaurant_reservations?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type':'application/json', 'apikey':SUPABASE_KEY, 'Authorization':`Bearer ${SUPABASE_KEY}` },
+    body: JSON.stringify({ status })
+  });
+  fetchData();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Menu — Ember & Spice</title>
+<link rel="stylesheet" href="css/style.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZS3KBH3XW4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZS3KBH3XW4');</script>
+</head>
+<body>
+
+<nav class="navbar scrolled">
+  <div class="container">
+    <div class="navbar-inner">
+      <a href="index.html" class="nav-logo">Ember <span>&</span> Spice</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html" class="active">Menu</a></li>
+        <li><a href="index.html#chef">Our Chef</a></li>
+        <li><a href="index.html#location">Location</a></li>
+      </ul>
+      <a href="book.html" class="btn btn-primary">Reserve a Table</a>
+      <button class="nav-hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<div style="padding:140px 0 60px;text-align:center;background:var(--green);">
+  <div class="container">
+    <div class="section-label" style="justify-content:center;color:var(--copper-3)!important;">
+      <span style="display:inline-block;width:28px;height:1.5px;background:var(--copper-3);"></span>
+      Curated Menu
+    </div>
+    <h1 style="color:var(--cream);font-weight:400;">A Journey Through <em style="color:var(--copper-3);">Flavour</em></h1>
+    <p style="color:rgba(253,250,244,0.6);max-width:460px;margin:16px auto 0;">Seasonal ingredients, heritage recipes, modern technique. Prices per person, exclusive of taxes.</p>
+  </div>
+</div>
+
+<div class="container" style="padding:80px 32px 120px;">
+
+  <!-- Chef's Tasting Menu -->
+  <div style="background:var(--green);border-radius:var(--radius-xl);padding:52px;margin-bottom:60px;position:relative;overflow:hidden;" class="reveal">
+    <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(184,115,51,0.15),transparent);border-radius:50%;"></div>
+    <div style="display:grid;grid-template-columns:1fr auto;align-items:start;gap:32px;position:relative;z-index:1;">
+      <div>
+        <div class="section-label" style="color:var(--copper-3)!important;"><span style="display:inline-block;width:28px;height:1.5px;background:var(--copper-3);margin-right:10px;"></span>Most Celebrated</div>
+        <h2 style="color:var(--cream);font-weight:400;margin-bottom:16px;">Chef's Tasting Menu</h2>
+        <p style="color:rgba(253,250,244,0.65);max-width:480px;margin-bottom:28px;">A curated 7-course journey through Chef Vikram's most celebrated creations. The ultimate Ember & Spice experience, paired with house-crafted beverages.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;">
+          <span style="padding:6px 14px;background:rgba(184,115,51,0.15);border:1px solid rgba(184,115,51,0.25);border-radius:100px;font-size:0.72rem;color:var(--copper-3);">7 Courses</span>
+          <span style="padding:6px 14px;background:rgba(184,115,51,0.15);border:1px solid rgba(184,115,51,0.25);border-radius:100px;font-size:0.72rem;color:var(--copper-3);">~3 Hours</span>
+          <span style="padding:6px 14px;background:rgba(184,115,51,0.15);border:1px solid rgba(184,115,51,0.25);border-radius:100px;font-size:0.72rem;color:var(--copper-3);">Seasonal Menu</span>
+          <span style="padding:6px 14px;background:rgba(184,115,51,0.15);border:1px solid rgba(184,115,51,0.25);border-radius:100px;font-size:0.72rem;color:var(--copper-3);">Pre-order Required</span>
+        </div>
+        <a href="book.html" class="btn btn-copper">Reserve for Tasting Menu</a>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:var(--font-head);font-size:3rem;color:var(--copper-3);font-weight:400;">₹2,800</div>
+        <div style="font-size:0.75rem;color:rgba(253,250,244,0.4);text-transform:uppercase;letter-spacing:1px;">per person</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Starters -->
+  <div class="reveal" style="margin-bottom:56px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--cream-3);">
+      <h2 style="font-weight:400;color:var(--green);">Starters</h2>
+      <span style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;">Shareable · Light Bites</span>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-emoji">🔥</div><div class="menu-info"><h4>Smoked Burrata Chaat</h4><p>Cold smoke burrata, tamarind pearls, pomegranate, micro herbs, chaat masala crumble</p><span class="menu-badge">Chef's Pick</span></div><div class="menu-price">₹480</div></div>
+      <div class="menu-item"><div class="menu-emoji">🦐</div><div class="menu-info"><h4>Malabar Prawn Cocktail</h4><p>Tiger prawns, raw mango salsa, coconut foam, curry leaf oil, papadum tuile</p></div><div class="menu-price">₹620</div></div>
+      <div class="menu-item"><div class="menu-emoji">🌿</div><div class="menu-info"><h4>Heirloom Tomato Shorba</h4><p>Slow-roasted tomatoes, lemongrass, basil oil, crispy quinoa, kokum</p><span class="menu-badge">Vegan</span></div><div class="menu-price">₹320</div></div>
+      <div class="menu-item"><div class="menu-emoji">🥩</div><div class="menu-info"><h4>Tandoori Lamb Chops</h4><p>French-trimmed chops, saffron raan marinade, mint chutney, pickled radish</p><span class="menu-badge">Bestseller</span></div><div class="menu-price">₹780</div></div>
+      <div class="menu-item"><div class="menu-emoji">🫕</div><div class="menu-info"><h4>Pani Puri Flights</h4><p>Six varieties — truffle, jaljeera, coconut, aam panna, chilli lime, classic</p><span class="menu-badge">Table Favourite</span></div><div class="menu-price">₹380</div></div>
+      <div class="menu-item"><div class="menu-emoji">🥗</div><div class="menu-info"><h4>Wild Mushroom Galouti</h4><p>Slow-cooked wild mushroom patties, saffron warqi paratha, fig chutney</p><span class="menu-badge">Vegan</span></div><div class="menu-price">₹440</div></div>
+    </div>
+  </div>
+
+  <!-- Main Course -->
+  <div class="reveal" style="margin-bottom:56px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--cream-3);">
+      <h2 style="font-weight:400;color:var(--green);">Main Course</h2>
+      <span style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;">Served with bread selection</span>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-emoji">🍛</div><div class="menu-info"><h4>Dal Maharani</h4><p>48-hour slow-cooked black lentils, truffle butter, smoked cream, pickled onion, ghee</p><span class="menu-badge">Signature</span></div><div class="menu-price">₹560</div></div>
+      <div class="menu-item"><div class="menu-emoji">🐔</div><div class="menu-info"><h4>Butter Chicken Reimagined</h4><p>Free-range chicken, heirloom tomato makhani, house-churned butter, charcoal naan</p><span class="menu-badge">Bestseller</span></div><div class="menu-price">₹720</div></div>
+      <div class="menu-item"><div class="menu-emoji">🐟</div><div class="menu-info"><h4>Kerala Sea Bass</h4><p>Pan-seared sea bass, coconut moilee, raw banana thoran, curry leaf oil</p></div><div class="menu-price">₹980</div></div>
+      <div class="menu-item"><div class="menu-emoji">🌾</div><div class="menu-info"><h4>Jackfruit Biryani</h4><p>Young jackfruit dum biryani, saffron basmati, caramelised onions, mint raita</p><span class="menu-badge">Vegan</span></div><div class="menu-price">₹480</div></div>
+      <div class="menu-item"><div class="menu-emoji">🦞</div><div class="menu-info"><h4>Lobster Mangalorean Curry</h4><p>Half lobster, coconut-coriander curry, appam, pickled green mango</p></div><div class="menu-price">₹1,480</div></div>
+      <div class="menu-item"><div class="menu-emoji">🐑</div><div class="menu-info"><h4>Rogan Josh Royale</h4><p>Slow-braised Kashmiri lamb shank, hand-rolled naan, saffron yoghurt</p><span class="menu-badge">Chef's Pick</span></div><div class="menu-price">₹1,100</div></div>
+    </div>
+  </div>
+
+  <!-- Desserts -->
+  <div class="reveal" style="margin-bottom:56px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--cream-3);">
+      <h2 style="font-weight:400;color:var(--green);">Desserts</h2>
+      <span style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;">A Sweet Farewell</span>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-emoji">🍮</div><div class="menu-info"><h4>Gulab Jamun Soufflé</h4><p>Warm rose-cardamom soufflé, rabdi ice cream, pistachio dust, 24K gold leaf</p><span class="menu-badge">Chef's Pick</span></div><div class="menu-price">₹380</div></div>
+      <div class="menu-item"><div class="menu-emoji">🍫</div><div class="menu-info"><h4>Dark Chocolate Mishti</h4><p>70% Coorg dark chocolate, saffron cream, jaggery tuile, freeze-dried raspberry</p></div><div class="menu-price">₹420</div></div>
+      <div class="menu-item"><div class="menu-emoji">🥭</div><div class="menu-info"><h4>Mango Shrikhand Panna Cotta</h4><p>Alphonso mango, hung curd panna cotta, cardamom crumble, mango pearls</p><span class="menu-badge">Seasonal</span></div><div class="menu-price">₹360</div></div>
+      <div class="menu-item"><div class="menu-emoji">🍨</div><div class="menu-info"><h4>Artisan Kulfi Selection</h4><p>Three kulfis — rose & lychee, paan, saffron-pistachio. Served on stick with falooda</p></div><div class="menu-price">₹280</div></div>
+    </div>
+  </div>
+
+  <!-- Beverages -->
+  <div class="reveal" style="margin-bottom:60px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--cream-3);">
+      <h2 style="font-weight:400;color:var(--green);">Crafted Beverages</h2>
+      <span style="font-size:0.75rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;">All Non-Alcoholic</span>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-emoji">🌹</div><div class="menu-info"><h4>Rose & Cardamom Spritz</h4><p>House rose water, cardamom syrup, sparkling water, dried petals</p></div><div class="menu-price">₹220</div></div>
+      <div class="menu-item"><div class="menu-emoji">🍋</div><div class="menu-info"><h4>Raw Mango Jaljeera</h4><p>Green mango, cumin, black salt, fresh mint, chilled on ice</p><span class="menu-badge">Bestseller</span></div><div class="menu-price">₹180</div></div>
+      <div class="menu-item"><div class="menu-emoji">☕</div><div class="menu-info"><h4>Spiced Masala Cold Brew</h4><p>Coorg coffee cold brew, cardamom, cinnamon, oat milk</p></div><div class="menu-price">₹260</div></div>
+      <div class="menu-item"><div class="menu-emoji">🥥</div><div class="menu-info"><h4>Coconut Thandai</h4><p>Traditional thandai spices, fresh coconut water, rose, served chilled</p></div><div class="menu-price">₹200</div></div>
+    </div>
+  </div>
+
+  <!-- Reserve CTA -->
+  <div style="background:var(--cream-2);border:1px solid var(--cream-3);border-radius:var(--radius-xl);padding:52px;text-align:center;" class="reveal">
+    <div class="section-label" style="justify-content:center;">Ready to Dine?</div>
+    <h2 style="font-weight:400;margin-bottom:16px;color:var(--green);">Reserve Your <em style="color:var(--copper);">Table</em></h2>
+    <p style="max-width:400px;margin:0 auto 32px;">Join us for an evening of extraordinary flavours. Tables are limited — book yours today.</p>
+    <a href="book.html" class="btn btn-primary">Reserve a Table →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="padding-top:0;">
+      <span>© 2026 Ember & Spice. All rights reserved.</span>
+      <a href="https://vardevo.com" class="vardevo-badge" target="_blank">✦ Built by Vardevo</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">💬</a>
+
+<script>
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
